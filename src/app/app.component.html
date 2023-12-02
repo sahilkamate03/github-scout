@@ -1,3 +1,4 @@
+<!-- This is the navigation bar at the top of the page -->
 <nav
   class="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
   <div
@@ -17,53 +18,113 @@
   </div>
 </nav>
 
+<form (submit)="getResults(searchInput.value)">
+  <!-- Form fields here -->
+  <div class="mx-auto flex justify-center mt-8">
+    <input type="text" #searchInput placeholder="Search"
+      class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    <button type="submit"
+      class="px-4 py-2 ml-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
+  </div>
+</form>
 
-
-<div class="mx-auto flex justify-center mt-8">
-
-  <!-- Search Bar -->
-  <input type="text" placeholder="Search"
-    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-  <button
-    class="px-4 py-2 ml-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
-
-</div>
-
-<div class="mx-auto max-w-md p-4 bg-white rounded-md shadow-md mt-7">
+<!-- This is the user profile section -->
+<div class="mx-auto max-w-md p-4 bg-white rounded-md shadow-md mt-7 min-w-300 min-h-900">
   <div class="flex items-left ">
     <div class="flex items-center">
-      <div class="w-16 h-16 rounded-full bg-gray-300">
-        <img class="img-responsive" src="https://avatars.githubusercontent.com/u/45514385">
-
-      </div> <!-- Profile Image -->
+      <div class="w-32 h-32 rounded-full ">
+        <div class="mr-3">
+          <img class="img-responsive" src="{{userData?.avatar_url}}">
+        </div>
+      </div>
       <div class="ml-4">
-        <div>Name</div>
-        <div>Description</div>
-        <div>Location</div>
-        <div>Social</div>
+        <div *ngIf="userData?.name"><strong>Name:</strong> {{userData?.name}}</div>
+        <div *ngIf="userData?.bio"><strong>Bio:</strong> {{userData?.bio}}</div>
+        <div *ngIf="userData?.location"><strong>Location:</strong> {{userData?.location}}</div>
+        <div *ngIf="userData?.twitter">
+          <a href="https://twitter.com/{{userData?.twitter_username}}"
+            class="inline-block px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400">
+            Twitter
+          </a>
+        </div>
+        <div *ngIf="userData?.html_url">
+          <a href="https://twitter.com/{{userData?.html_url}}"
+            class="inline-block px-4 py-2 mt-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400">
+            GitHub
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-
-<div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-  <div class="rounded overflow-hidden shadow-lg">
-    <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
+<!-- This is the grid section for displaying repository data -->
+<div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 min-h-800">
+  <!-- Loop through JSON data and display repository cards -->
+  <div class="rounded overflow-hidden shadow-lg" *ngFor="let item of repoData">
     <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">Mountain</div>
+      <div class="font-bold text-xl mb-2">{{ item.name }}</div>
       <p class="text-gray-700 text-base">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis
-        eaque, exercitationem praesentium nihil.
+        {{ item.description }}
       </p>
     </div>
     <div class="px-6 pt-4 pb-2">
-      <span
-        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-      <span
-        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-      <span
-        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+      <!-- Loop through tags and display them as badges -->
+      <span *ngFor="let tag of item.topics"
+        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+        {{ tag }}
+      </span>
     </div>
   </div>
 </div>
+
+
+<div class="flex flex-col lg:flex-row items-center space-x-2 text-xs flex flex-col lg:flex-row justify-center mb-8">
+  <select data-te-select-init >
+    <option value="1" selected>10</option>
+    <option value="2">25</option>
+    <option value="3">50</option>
+    <option value="4">100</option>
+  </select>
+  
+  <p class="text-gray-500 mt-4 lg:mt-0">Items per page (Max:100)</p>
+</div>
+
+<div class="flex flex-col lg:flex-row justify-center">
+
+  <nav aria-label="Page navigation">
+    <ul class="inline-flex">
+      <li><button
+          class="h-10 px-5 text-white transition-colors duration-150 bg-indigo-600 rounded-l-lg focus:shadow-outline"
+          (click)="updateCurrentPageNumber(1)">First</button></li>
+      <li><button
+          class="h-10 px-5 text-indigo-600 transition-colors duration-150 bg-white focus:shadow-outline hover:bg-indigo-100"
+          *ngIf="currentPage > 1" (click)="updateCurrentPageNumber(currentPage-1)">Prev</button></li>
+      <li><button
+          class="h-10 px-5 text-indigo-600 transition-colors duration-150 bg-white focus:shadow-outline hover:bg-indigo-100">{{currentPage}}/{{maxPage}}</button>
+      </li>
+      <li><button
+          class="h-10 px-5 text-indigo-600 transition-colors duration-150 bg-white focus:shadow-outline hover:bg-indigo-100"
+          *ngIf="currentPage < maxPage" (click)="updateCurrentPageNumber(currentPage+1)">Next</button></li>
+      <li><button
+          class="h-10 px-5 text-white transition-colors duration-150 bg-indigo-600 rounded-r-lg focus:shadow-outline"
+          (click)="updateCurrentPageNumber(maxPage)">Last</button></li>
+
+    </ul>
+  </nav>
+</div>
+
+<!-- <div ng-app="myApp" ng-controller="myCtrl">
+  <div ng-repeat="item in data | pagination: currentPage : itemsPerPage">
+    <div ng-app="myApp" ng-controller="myCtrl">
+      <div ng-repeat="item in data | pagination: currentPage : itemsPerPage">
+        {{item}}
+      </div>
+      <button ng-click="previousPage()">Previous</button>
+      <button ng-click="nextPage()">Next</button>
+    </div>
+  </div>
+  <button ng-click="previousPage()">Previous</button>
+  <button ng-click="nextPage()">Next</button>
+</div> -->
+
