@@ -15,50 +15,51 @@ export class AppComponent implements OnInit {
   maxPage: number = 1;
   perPage: number = 10;
   serachInput: any;
+  itemsPerPage = [10, 20, 50, 100];
+  selectedOption = 10;
 
+  // Get results for the given username
   getResults(username: any) {
     this.githubUsername = username;
 
-    this.getUserDetail(username);
-    this.getRepoDetail(username);
+    this.getUserDetail(this.githubUsername);
+    this.getRepoDetail(this.githubUsername);
   }
 
+  // Get user details for the given username
   getUserDetail(username: any) {
-    // Access the form data here and perform necessary actions
-    // console.log(formData);
     this.githubUsername = username;
 
     this.apiService.getUser(username).subscribe((data: any) => {
-      console.log(data); // Explore the data available
-      this.userData = data; // Assign the JSON data to the property
+      console.log(data);
+      this.userData = data;
     });
   }
 
-  updatePerPage(perPage: number | null) {
-    console.log("Per Page: " + perPage);
-    if (perPage === null) {
-      perPage = this.perPage;
-    }
-    if (perPage >= 1 && perPage <= 100) {
-      this.perPage = perPage;
+  // Update the number of items per page
+  updatePerPage(perPage: string) {
+    var perPageNumber = parseInt(perPage);
+    this.currentPage = 1;
+    if (perPageNumber >= 1 && perPageNumber <= 100) {
+      this.perPage = perPageNumber;
       console.log("Per Page: " + this.perPage);
       this.getRepoDetail(this.githubUsername);
+      this.handlePagination();
     } else {
       console.log("Invalid perPage value. Please enter a value between 1 and 100.");
     }
   }
 
+  // Get repository details for the given username
   getRepoDetail(username: any) {
-    // Access the form data here and perform necessary actions
-    // console.log(formData);
     this.githubUsername = username;
-
-    this.apiService.getUserRepo(username, this.currentPage, this.perPage).subscribe((data: any) => {
-      console.log(data); // Explore the data available
-      this.repoData = data; // Assign the JSON data to the property
+    this.apiService.getUserRepo(this.githubUsername, this.currentPage, this.perPage).subscribe((data: any) => {
+      console.log(data);
+      this.repoData = data;
     });
   }
 
+  // Update the current page number
   updateCurrentPageNumber(pageNumber: number) {
     this.currentPage = pageNumber;
     console.log("Current Page Number: " + this.currentPage);
@@ -69,23 +70,23 @@ export class AppComponent implements OnInit {
     private apiService: ApiService
   ) { }
 
+  // Handle pagination
   async handlePagination() {
     this.maxPage = await this.apiService.getMaxPage(this.githubUsername, this.perPage) ?? 1;
   }
 
   ngOnInit() {
     this.apiService.getUserRepo('fylein', this.currentPage, this.perPage).subscribe((data: any) => {
-      console.log(data); // Explore the data available
-      this.repoData = data; // Assign the JSON data to the property
+      console.log(data);
+      this.repoData = data;
     });
 
     this.apiService.getUser('fylein').subscribe((data: any) => {
-      console.log(data); // Explore the data available
-      this.userData = data; // Assign the JSON data to the property
+      console.log(data);
+      this.userData = data;
     });
 
     this.handlePagination();
   }
 
 }
-
