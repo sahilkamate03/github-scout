@@ -37,11 +37,11 @@ export class AppComponent implements OnInit {
         this.user = true;
         setTimeout(() => {
           this.isLoadingUserDetail = false;
-        }, 200); 
-      
+        }, 200);
+
       },
       (error: any) => {
-        console.error(error);
+        this.isLoadingUserDetail = false;
         this.user = false;
         this.errorMessage = 'User not found. Please enter a valid username.';
       }
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     if (perPageNumber >= 1 && perPageNumber <= 100) {
       this.perPage = perPageNumber;
       this.getRepoDetail(this.githubUsername);
-    } 
+    }
   }
 
   // Update the current page number
