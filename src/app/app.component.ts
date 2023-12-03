@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   maxPage: number = 1;
   perPage: number = 10;
   serachInput: any;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   selectedOption = 10;
   errorMessage ='';
 
@@ -32,9 +32,7 @@ export class AppComponent implements OnInit {
   // Get user details for the given username
   getUserDetail(username: any) {
     this.isLoading = true;
-
     this.githubUsername = username;
-
     this.apiService.getUser(username).subscribe(
       (data: any) => {
         console.log(data);
@@ -94,7 +92,9 @@ export class AppComponent implements OnInit {
 
   // Handle pagination
   async handlePagination() {
+    this.isLoading = true;
     this.maxPage = await this.apiService.getMaxPage(this.githubUsername, this.perPage) ?? 1;
+    this.isLoading = false;
   }
 
   ngOnInit() {
