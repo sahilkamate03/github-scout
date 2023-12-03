@@ -48,10 +48,6 @@ export class ApiService {
         observe: 'response'
       }).subscribe(response => {
         const linkHeader = response.headers.get('Link');
-        const links = linkHeader?.split(',');
-        const prevLink = links?.find(l => l.includes('rel="prev"'));
-        const nextLink = links?.find(l => l.includes('rel="next"'));
-
         const pageNumber = this.getPageNumber(linkHeader!);
         if (pageNumber !== null) {
           maxPage = pageNumber;
