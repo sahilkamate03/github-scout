@@ -10,13 +10,15 @@ export class AppComponent implements OnInit {
 
   repoData: any[] = [];
   userData: any;
-  githubUsername: string = 'fylein';
+  user: boolean = false;
+  githubUsername: string = '';
   currentPage: number = 1;
   maxPage: number = 1;
   perPage: number = 10;
   serachInput: any;
   isLoading: boolean = true;
   selectedOption = 10;
+  errorMessage ='';
 
   // Get results for the given username
   getResults(username: any) {
@@ -33,12 +35,21 @@ export class AppComponent implements OnInit {
 
     this.githubUsername = username;
 
-    this.apiService.getUser(username).subscribe((data: any) => {
-      console.log(data);
-      this.userData = data;
-    });
-    this.isLoading = false;
-
+    this.apiService.getUser(username).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.userData = data;
+        this.isLoading = false;
+        this.user = true;
+      },
+      (error: any) => {
+        console.error(error);
+        this.user = false;
+        this.isLoading = false;
+        console.log(error.errorMessage);
+        this.errorMessage = 'User not found. Please enter a valid username.';
+      }
+    );
   }
 
   // Update the number of items per page
@@ -59,12 +70,12 @@ export class AppComponent implements OnInit {
   // Get repository details for the given username
   getRepoDetail(username: any) {
     this.isLoading = true;
-    this.handlePagination();
     this.githubUsername = username;
     this.apiService.getUserRepo(this.githubUsername, this.currentPage, this.perPage).subscribe((data: any) => {
       console.log(data);
       this.repoData = data;
     });
+    this.handlePagination();
     this.isLoading = false;
   }
 
@@ -87,7 +98,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getResults(this.githubUsername);
+    // this.getResults(this.githubUsername);
   }
 
 }
