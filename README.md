@@ -1,43 +1,48 @@
 # Fyle Frontend Challenge
 
-## Who is this for?
-
-This challenge is meant for candidates who wish to intern at Fyle and work with our engineering team. The candidate should be able to commit to at least 6 months of dedicated time for internship.
-
-## Why work at Fyle?
-
-Fyle is a fast-growing Expense Management SaaS product. We are ~40 strong engineering team at the moment. 
-
-We are an extremely transparent organization. Check out our [careers page](https://careers.fylehq.com) that will give you a glimpse of what it is like to work at Fyle. Also, check out our Glassdoor reviews [here](https://www.glassdoor.co.in/Reviews/Fyle-Reviews-E1723235.htm). You can read stories from our teammates [here](https://stories.fylehq.com).
-
-## Challenge outline
-
-This challenge involves implementing application using github api. 
-
-The services that you need to use are already implemented - check out ApiService.
-
-You can see details of this challenge [here](https://fyleuniverse.notion.site/fyleuniverse/Fyle-Frontend-development-challenge-cb5085e5e0864e769e7b98c694400aaa)
-
-__Note__ - This challenge is in angular. We work on angular frameworks & after you join we expect the same from you. Hence it is required to complete this assignement in angular itself.
-
-## What happens next?
-
-You will hear back within 48 hours from us via email.
-
 ## Installation
 
-1. Fork this repository to your github account.
-2. Clone the forked repository and proceed with steps mentioned below.
+1. Fork this repository to your GitHub account.
+2. Clone the forked repository and proceed with the steps mentioned below.
 
 ### Install requirements
-* Install angular cli [Ref](https://angular.io/cli)
-* `npm install` in this repository 
+* Install Angular CLI [Ref](https://angular.io/cli)
+* Run `npm install` in this repository 
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
-## Further help
 
-Visit the [Angular Documentation](https://angular.io/guide/styleguide) to learn more.
-Styling is to be strictly done with [Tailwind](https://tailwindcss.com/docs/installation).
+## Run Test Cases
+
+Run `ng test` to start test cases. 
+
+## Features
+
+- **User Search**: Easily search for GitHub users by entering their username.
+- **Profile Details**: Get detailed information about a user, including their bio, location, and social links.
+- **Repository Display**: View a list of repositories for the searched user, complete with descriptions and languages used.
+- **Pagination**: Navigate through multiple pages of repositories with pagination controls.
+- **Loading Skeletons**: Experience a smooth loading experience with skeleton loaders while data is being fetched.
+- **Error Handling**: Gracefully handle errors, providing informative messages for invalid input or failed API requests.
+
+# Utilized Libraries
+
+This Angular application makes use of several libraries to enhance functionality and streamline the development process:
+
+## [Angular](https://angular.io/)
+Angular serves as the core framework for this web application, providing robust capabilities for UI development and application logic management.
+
+## [ngx-skeleton-loader](https://www.npmjs.com/package/ngx-skeleton-loader)
+The `ngx-skeleton-loader` library is integrated to improve the user experience during data retrieval. It offers loading skeletons, creating a seamless transition while awaiting data.
+
+## [HttpClientModule](https://angular.io/api/common/http/HttpClientModule)
+`HttpClientModule`, an integral part of the Angular framework, is employed for making HTTP requests. It facilitates communication with the GitHub API to retrieve necessary data.
+
+## [FormsModule](https://angular.io/guide/forms)
+Angular's `FormsModule` is crucial for form handling and implementing two-way data binding. It enables the capture of user input for GitHub username search.
+
+## [NgxSkeletonLoaderModule](https://www.npmjs.com/package/ngx-skeleton-loader)
+The `NgxSkeletonLoaderModule` is imported to seamlessly integrate the `ngx-skeleton-loader` library, enhancing the user interface by incorporating loading skeletons during data retrieval.
+
