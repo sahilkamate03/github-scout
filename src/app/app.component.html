@@ -11,14 +11,15 @@
 
   <div class="block">
     <a href="https://github.com/fork-of-sahil/fyle-internship-challenge-23" target="_blank">
-    <button id="nav"
-      class="flex items-center px-3 py-2 border-2 rounded text-blue-700  hover:bg-blue-500 hover:text-white hover:border-blue-700">
-      Source Code
-    </button>
-  </a>
+      <button id="nav"
+        class="flex items-center px-3 py-2 border-2 rounded text-blue-700  hover:bg-blue-500 hover:text-white hover:border-blue-700">
+        Source Code
+      </button>
+    </a>
   </div>
 </nav>
 
+<!-- This is the welcome message section -->
 <div class="max-w-lg mt-4 rounded overflow-hidden mx-auto h-300 w-200">
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2 ">Repos Time!</div>
@@ -44,7 +45,8 @@
   </div>
 </form>
 
-<ng-container *ngIf="!isLoading && !user && errorMessage!==''">
+<!-- This is the error message section -->
+<ng-container *ngIf="!isLoadingUserDetail && !user && errorMessage!==''">
   <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-10">
     <div class="bg-red-500 text-white rounded-lg shadow p-6 text-center">
       <h2 class="text-2xl font-bold mb-4">Oops! Invalid Username.</h2>
@@ -53,15 +55,17 @@
   </div>
 </ng-container>
 
-<div *ngIf="isLoading" class="mx-auto max-w-md p-4 bg-white rounded-md shadow-md mt-7 min-w-300 min-h-900">
-  <div class="rounded overflow-hidden">
+<!-- SKeletal Loading User Detail -->
+<ng-container *ngIf="isLoadingUserDetail">
+  <div *ngIf="isLoadingUserDetail" class="mx-auto max-w-lg p-4 bg-white rounded-md shadow-md mt-7 min-w-300 min-h-900">
     <ngx-skeleton-loader class="w-38rem h-10rem min-w-300 min-h-300 bg-gray-50"
       [theme]='{"width":"100%","height":"15rem","backgroundColor":"#E5E7EB"}'></ngx-skeleton-loader>
   </div>
-</div>
+</ng-container>
 
 <!-- This is the user profile section -->
-<div *ngIf="!isLoading && user" class="mx-auto max-w-lg p-4 bg-white rounded-md shadow-md mt-7 min-w-300 min-h-900">
+<div *ngIf="!isLoadingUserDetail && user"
+  class="mx-auto max-w-lg p-4 bg-white rounded-md shadow-md mt-7 min-w-300 min-h-900">
   <div class="mx-auto flex items-center justify-center">
     <div class="w-32 h-32 rounded-full">
       <div class="mr-3 max-w-md max-h-md">
@@ -91,32 +95,35 @@
   </div>
 </div>
 
-<!-- This is the grid section for displaying repository data -->
-<div *ngIf="isLoading"
-  class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 min-h-800">
-  <div class="rounded overflow-hidden shadow-lg" *ngFor="let item of [].constructor(9); let i = index">
-    <ngx-skeleton-loader class="w-38rem h-10rem min-w-300 min-h-300 bg-gray-50"
-      [theme]='{"width":"100%","height":"15rem","backgroundColor":"#E5E7EB"}'></ngx-skeleton-loader>
+<!-- SKeletal Loading Repo Detail -->
+<ng-container *ngIf="isLoadingRepoDetail">
+  <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 min-h-800">
+    <div class="rounded overflow-hidden shadow-lg" *ngFor="let item of [].constructor(5);">
+      <ngx-skeleton-loader class="w-38rem h-10rem min-w-300 min-h-300 bg-gray-50"
+        [theme]='{"width":"100%","height":"15rem","backgroundColor":"#E5E7EB"}'></ngx-skeleton-loader>
+    </div>
   </div>
-</div>
+</ng-container>
 
 <!-- This is the grid section for displaying repository data -->
-<div *ngIf="!isLoading && user"
+<div *ngIf="!isLoadingRepoDetail && user"
   class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 min-h-800">
   <!-- Loop through JSON data and display repository cards -->
 
   <div class="rounded overflow-hidden shadow-lg" *ngFor="let item of repoData">
     <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">{{ item.name }}</div>
+      <a href="{{ item.html_url }}" target="_blank">
+        <div class="font-bold text-xl mb-2">{{ item.name }}</div>
+      </a>
       <p class="text-gray-700 text-base">
         {{ item.description }}
       </p>
     </div>
     <div class="px-6 pt-4 pb-2">
-      <!-- Loop through tags and display them as badges -->
-      <span *ngFor="let tag of item.topics"
+      <!-- Loop through topics and display them as badges -->
+      <span *ngFor="let topic of item.topics"
         class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-        {{ tag }}
+        {{ topic }}
       </span>
     </div>
   </div>

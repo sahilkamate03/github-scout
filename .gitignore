@@ -94,3 +94,4 @@ e2e/*.map
 
 #env variables
 src/app/environment/environment.prod.ts
+.vercel
