@@ -12,7 +12,7 @@ fs.writeFileSync(filePath, ``);
 fs.appendFileSync(filePath, `
 export const environment = {
         production: true,
-        apiKey: ${process.env.GIHUB_API_KEY},
+        apiKey: '${process.env.GIHUB_API_KEY}',
 };
 `);
 
