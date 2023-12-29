@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const filePath = './src/app/environment/environments.prod.ts';
+const filePath = './src/app/environment/environment.prod.ts';
 const directoryPath = path.dirname(filePath);
 
 if (!fs.existsSync(directoryPath)) {
