@@ -27,6 +27,15 @@ export class ApiService {
       });
   }
 
+  getUserRepoLang(githubRepoLink: string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${environment.apiKey}`);
+    return this.httpClient.get(githubRepoLink,
+      {
+        headers,
+      });
+  }
+  
+
   getPageNumber(linkHeader: string): number | null {
     const regex = /page=(\d+)>; rel="last"/;
     const match = linkHeader.match(regex);

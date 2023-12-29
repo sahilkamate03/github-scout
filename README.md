@@ -1,4 +1,4 @@
-# Fyle Frontend Challenge
+# GitHub-Scout
 
 ## Installation
 
