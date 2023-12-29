@@ -28,7 +28,8 @@
             "assets": [
               "src/favicon.ico",
               "src/favicon.png",
-              "src/assets"
+              "src/assets",
+              "src/camping.png"
             ],
             "styles": [
               "src/styles.scss"
