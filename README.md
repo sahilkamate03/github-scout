@@ -1,4 +1,7 @@
 # GitHub-Scout
+GitHub-Scout is a web application built using Angular that allows users to retrieve comprehensive information about a GitHub user and their repositories. The project leverages the GitHub API to fetch details such as the user's bio, location, and other profile-related information. Additionally, it provides an in-depth overview of each repository, including descriptions and topics associated with the user's projects.
+
+Users can input a GitHub username into the application, triggering a seamless and dynamic display of the requested information. The application enhances the user experience by presenting the data in a clean and organized format, making it easy to navigate and comprehend. GitHub-Scout is a powerful tool for developers and enthusiasts seeking quick insights into a user's GitHub profile and their repository landscape. It offers a convenient way to explore and understand the diverse projects hosted on GitHub.
 
 ## Installation
 
